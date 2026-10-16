@@ -14,5 +14,5 @@ results/measurements/*.csv
 !results/images/.gitkeep
 !results/trajectories/.gitkeep
 !results/measurements/.gitkeep
-graphify-out/
+graphify-out/cache/
 .DS_Store
