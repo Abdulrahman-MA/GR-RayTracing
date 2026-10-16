@@ -1,0 +1,266 @@
+{
+  "CMakePresets.json": {
+    "mtime": 1792184530.2096925,
+    "seen": 1792184644.0497596,
+    "ast_hash": "c9909c3f4b96f6481da01d3c0e3ac9b2",
+    "semantic_hash": ""
+  },
+  "configs/kerr.json": {
+    "mtime": 1792184429.9800577,
+    "seen": 1792184644.049765,
+    "ast_hash": "73b848e5a4edc3348f89d33acbad0bd1",
+    "semantic_hash": ""
+  },
+  "configs/schwarzschild.json": {
+    "mtime": 1792184426.2650728,
+    "seen": 1792184644.0497675,
+    "ast_hash": "39feaf192a93123161a0a6a25137a210",
+    "semantic_hash": ""
+  },
+  "include/grrt/camera/Camera.hpp": {
+    "mtime": 1792184258.1800072,
+    "seen": 1792184644.0497687,
+    "ast_hash": "d8e84bee9a729ba7b7162e19ccd3c268",
+    "semantic_hash": ""
+  },
+  "include/grrt/camera/ObserverFrame.hpp": {
+    "mtime": 1792184238.384813,
+    "seen": 1792184644.0497704,
+    "ast_hash": "653e2a62ac12e184155cb626ac533ad0",
+    "semantic_hash": ""
+  },
+  "include/grrt/geodesics/GeodesicState.hpp": {
+    "mtime": 1792184203.6058564,
+    "seen": 1792184644.0497715,
+    "ast_hash": "dafc1a4216113e5ac6a458bb28c95b0f",
+    "semantic_hash": ""
+  },
+  "include/grrt/geodesics/HamiltonianSystem.hpp": {
+    "mtime": 1792184209.5213573,
+    "seen": 1792184644.0497727,
+    "ast_hash": "9e041b7b0a83a27a0932829b70e8e4e2",
+    "semantic_hash": ""
+  },
+  "include/grrt/geodesics/Integrator.hpp": {
+    "mtime": 1792184229.0161047,
+    "seen": 1792184644.049774,
+    "ast_hash": "4846b7989866e2595311a5b9f6c0bab8",
+    "semantic_hash": ""
+  },
+  "include/grrt/math/Coordinates.hpp": {
+    "mtime": 1792184133.747972,
+    "seen": 1792184644.0497751,
+    "ast_hash": "2058e4df0a7bb90fb7ee3e0256f3b0e8",
+    "semantic_hash": ""
+  },
+  "include/grrt/math/Matrix4.hpp": {
+    "mtime": 1792184194.7004757,
+    "seen": 1792184644.049776,
+    "ast_hash": "c06d1b9b2b5d96108235eff0a56e8a41",
+    "semantic_hash": ""
+  },
+  "include/grrt/math/State.hpp": {
+    "mtime": 1792184149.97217,
+    "seen": 1792184644.0497775,
+    "ast_hash": "ea88ff10ee08ce2878bca9637101278b",
+    "semantic_hash": ""
+  },
+  "include/grrt/metrics/KerrMetric.hpp": {
+    "mtime": 1792184180.6597924,
+    "seen": 1792184644.049779,
+    "ast_hash": "5c5c17a62e51e1fe5bb9da41ec8b5eb8",
+    "semantic_hash": ""
+  },
+  "include/grrt/metrics/Metric.hpp": {
+    "mtime": 1792184155.1126332,
+    "seen": 1792184644.0497801,
+    "ast_hash": "0d6d8aeb53ccc64be7548b8323e1cab8",
+    "semantic_hash": ""
+  },
+  "include/grrt/metrics/SchwarzschildMetric.hpp": {
+    "mtime": 1792184163.0631309,
+    "seen": 1792184644.0497813,
+    "ast_hash": "b89fd548533ded492e9be48855a4ff47",
+    "semantic_hash": ""
+  },
+  "include/grrt/objects/AccretionDisk.hpp": {
+    "mtime": 1792184280.697116,
+    "seen": 1792184644.0497825,
+    "ast_hash": "d35d4ca712b54ef7f7e285f991fe21fd",
+    "semantic_hash": ""
+  },
+  "include/grrt/raytracing/RayOutcome.hpp": {
+    "mtime": 1792184269.1794157,
+    "seen": 1792184644.0497835,
+    "ast_hash": "e6debde88bb1ce780d8279e604f18c32",
+    "semantic_hash": ""
+  },
+  "include/grrt/raytracing/RayTracer.hpp": {
+    "mtime": 1792184290.0918765,
+    "seen": 1792184644.049785,
+    "ast_hash": "69a67e9aada9db7d8f4cdfd924617a0e",
+    "semantic_hash": ""
+  },
+  "include/grrt/rendering/Image.hpp": {
+    "mtime": 1792184303.105206,
+    "seen": 1792184644.0497859,
+    "ast_hash": "9c4e8696dfd6cbe33147c67a5b9b9d56",
+    "semantic_hash": ""
+  },
+  "include/grrt/rendering/Renderer.hpp": {
+    "mtime": 1792184317.7208042,
+    "seen": 1792184644.0497868,
+    "ast_hash": "db63fe9d1b18297d3e99d619753bb827",
+    "semantic_hash": ""
+  },
+  "src/camera/Camera.cpp": {
+    "mtime": 1792184262.581643,
+    "seen": 1792184644.049788,
+    "ast_hash": "ac7714bfa0da2e0925d2f64a86c97e40",
+    "semantic_hash": ""
+  },
+  "src/camera/ObserverFrame.cpp": {
+    "mtime": 1792184251.182307,
+    "seen": 1792184644.0497892,
+    "ast_hash": "4d5662e1943b8a1bdff7366549a76142",
+    "semantic_hash": ""
+  },
+  "src/geodesics/HamiltonianSystem.cpp": {
+    "mtime": 1792184216.0937417,
+    "seen": 1792184644.0497901,
+    "ast_hash": "47efb3915962454cfc70e8f4f98828ed",
+    "semantic_hash": ""
+  },
+  "src/main.cpp": {
+    "mtime": 1792184334.3440063,
+    "seen": 1792184644.049792,
+    "ast_hash": "c4df23837271945790f96447cdd842f5",
+    "semantic_hash": ""
+  },
+  "src/metrics/KerrMetric.cpp": {
+    "mtime": 1792184189.7890387,
+    "seen": 1792184644.049793,
+    "ast_hash": "5223fc75460bf03e2e40ea9ea535b626",
+    "semantic_hash": ""
+  },
+  "src/metrics/SchwarzschildMetric.cpp": {
+    "mtime": 1792184169.3594675,
+    "seen": 1792184644.049794,
+    "ast_hash": "653d0125d90a3480b4f4fc3c7cdf715e",
+    "semantic_hash": ""
+  },
+  "src/raytracing/RayTracer.cpp": {
+    "mtime": 1792184297.9690132,
+    "seen": 1792184644.0497952,
+    "ast_hash": "afbbd3a165cd380cf38a607d9a41075b",
+    "semantic_hash": ""
+  },
+  "src/rendering/Image.cpp": {
+    "mtime": 1792184309.0713294,
+    "seen": 1792184644.0497963,
+    "ast_hash": "5586615be3d239c3b328111fa36eb4cd",
+    "semantic_hash": ""
+  },
+  "src/rendering/Renderer.cpp": {
+    "mtime": 1792184325.8333728,
+    "seen": 1792184644.0497975,
+    "ast_hash": "0d07e9f507011d1dbffa49b2a9769ada",
+    "semantic_hash": ""
+  },
+  "tests/test_conservation.cpp": {
+    "mtime": 1792184373.806044,
+    "seen": 1792184644.049799,
+    "ast_hash": "3b3451b206ebf2298b1864c0fb499672",
+    "semantic_hash": ""
+  },
+  "tests/test_convergence.cpp": {
+    "mtime": 1792184378.2313125,
+    "seen": 1792184644.0497997,
+    "ast_hash": "bbd132af7563f01854d3ab90998ef6af",
+    "semantic_hash": ""
+  },
+  "tests/test_geodesics.cpp": {
+    "mtime": 1792184359.1710136,
+    "seen": 1792184644.0498009,
+    "ast_hash": "cf8f7a1ecc6bcc948b88753549d3bf35",
+    "semantic_hash": ""
+  },
+  "tests/test_metrics.cpp": {
+    "mtime": 1792184350.6567945,
+    "seen": 1792184644.0498023,
+    "ast_hash": "c8bac1cb22b64c2499c0cb2f84491cdf",
+    "semantic_hash": ""
+  },
+  "tests/test_ode.cpp": {
+    "mtime": 1792184342.7686532,
+    "seen": 1792184644.0498033,
+    "ast_hash": "f0b757404457aaad0332e095d4472259",
+    "semantic_hash": ""
+  },
+  "tests/test_ray_classification.cpp": {
+    "mtime": 1792184390.9263487,
+    "seen": 1792184644.0498042,
+    "ast_hash": "6faabe47deafc2a6301c612d34c3eba5",
+    "semantic_hash": ""
+  },
+  "tools/analyze_shadow.py": {
+    "mtime": 1792184420.7772894,
+    "seen": 1792184644.0498056,
+    "ast_hash": "060a2a3ea7f5f19698b882eae91c6d97",
+    "semantic_hash": ""
+  },
+  "tools/validate_ode.py": {
+    "mtime": 1792184404.2950373,
+    "seen": 1792184644.0498066,
+    "ast_hash": "c9427acbc1df46f9019b758154fc6ad2",
+    "semantic_hash": ""
+  },
+  "tools/validate_schwarzschild.py": {
+    "mtime": 1792184605.0227013,
+    "seen": 1792184644.0498078,
+    "ast_hash": "18d96f9f6bf3d27a2595b7cc04feef5d",
+    "semantic_hash": ""
+  },
+  "CMakeLists.txt": {
+    "mtime": 1792184525.2033396,
+    "seen": 1792184644.049809,
+    "ast_hash": "7bf0cf9c606b861cfdc50f35d8d24a9b",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1792184078.2110147,
+    "seen": 1792184644.0498102,
+    "ast_hash": "f1a653ad1da2d56dbd714044cd5ec88f",
+    "semantic_hash": ""
+  },
+  "docs/architecture.md": {
+    "mtime": 1792184469.2771442,
+    "seen": 1792184644.0498111,
+    "ast_hash": "c8a0c9f5b20747598bd770bbb8db103c",
+    "semantic_hash": ""
+  },
+  "docs/development-log.md": {
+    "mtime": 1792184515.348899,
+    "seen": 1792184644.0498126,
+    "ast_hash": "b6549938784d54396a8f3132bc650bd8",
+    "semantic_hash": ""
+  },
+  "docs/limitations.md": {
+    "mtime": 1792184510.5133655,
+    "seen": 1792184644.0498135,
+    "ast_hash": "d10ef3e3cce77f0b62e9f431da0ae3b0",
+    "semantic_hash": ""
+  },
+  "docs/theory.md": {
+    "mtime": 1792184444.5468588,
+    "seen": 1792184644.0498147,
+    "ast_hash": "d8a31b4f0e81e2afd06ebded74b06dd6",
+    "semantic_hash": ""
+  },
+  "docs/validation.md": {
+    "mtime": 1792184498.046864,
+    "seen": 1792184644.0498166,
+    "ast_hash": "6ce254578639e16bcbf8cbd89e0dff0f",
+    "semantic_hash": ""
+  }
+}
