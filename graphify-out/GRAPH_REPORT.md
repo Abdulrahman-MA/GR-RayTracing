@@ -66,75 +66,75 @@
 
 ## Communities (22 total, 3 thin omitted)
 
-### Community 0 - "Phase 2 — Build the actual ray-tracing engine"
+### Community 0 - "Exact Project Specification & Physics Roadmap | Exact Project Specification & Physics Roadmap | Phase 2 — Build the actual ray-tracing engine"
 Cohesion: 0.04
 Nodes (44): 1. Lock the technology stack, 2. Define exactly what you are building, 3. Exact implementation sequence, 4. Final repository architecture, Fix these assumptions for version 1, General-Relativistic Ray Tracer: Exact Project Specification, Phase 0 — Set up the project and prove your numerical toolkit works, Phase 1 — Build a Schwarzschild light-bending simulator (+36 more)
 
-### Community 1 - "GeodesicState"
+### Community 1 - "Phase Space (x^mu, p_mu) & Thin Accretion Disk Physics | Phase Space (x^mu, p_mu) & Thin Accretion Disk Physics | GeodesicState"
 Cohesion: 0.06
 Nodes (23): GeodesicState, data, array, size_t, operator+(), AccretionDisk, enabled_, DiskIntersection (+15 more)
 
-### Community 2 - "Image"
+### Community 2 - "Radiative Transfer & Multi-Threaded Pixel Pipeline | Radiative Transfer & Multi-Threaded Pixel Pipeline | Image"
 Cohesion: 0.07
 Nodes (27): ColorRGB, b, g, r, uint8_t, Image, data_, get_pixel (+19 more)
 
-### Community 3 - "Matrix4"
+### Community 3 - "Metric Tensors (g_munu, g^munu) & Tetrad Algebra | Metric Tensors (g_munu, g^munu) & Tetrad Algebra | Matrix4"
 Cohesion: 0.09
 Nodes (17): array, size_t, Matrix4, data, operator+(), array, MetricDerivatives, d_cov (+9 more)
 
-### Community 4 - "Metric"
+### Community 4 - "Schwarzschild & Kerr Spacetime Geometries | Schwarzschild & Kerr Spacetime Geometries | Metric"
 Cohesion: 0.08
 Nodes (16): HamiltonianSystem, backward_, evaluate_derivatives, evaluate_hamiltonian, metric_, KerrMetric, evaluate, horizon_radius (+8 more)
 
-### Community 5 - "Coordinates"
+### Community 5 - "Spacetime 4-Coordinates & Observer Tetrad (e_(a)^mu) | Spacetime 4-Coordinates & Observer Tetrad (e_(a)^mu) | Coordinates"
 Cohesion: 0.10
 Nodes (16): array, ObserverFrame, local_to_coordinate_momentum, lower_momentum, position_, sample_, tetrad_, Coordinates (+8 more)
 
-### Community 6 - "IntegratorConfig"
+### Community 6 - "Adaptive Dormand-Prince 5(4) Geodesic Stepper | Adaptive Dormand-Prince 5(4) Geodesic Stepper | IntegratorConfig"
 Cohesion: 0.10
 Nodes (19): size_t, Integrator, config_, IntegratorConfig, abs_tol, initial_step_size, max_step_size, max_steps (+11 more)
 
-### Community 7 - "State"
+### Community 7 - "Phase-Space Vector Primitives & Dynamic State | Phase-Space Vector Primitives & Dynamic State | State"
 Cohesion: 0.11
 Nodes (14): array, size_t, operator+(), State, data, N, State2, Oscillator (+6 more)
 
-### Community 8 - "Camera"
+### Community 8 - "Observer Camera & Screen Ray Projection | Observer Camera & Screen Ray Projection | Camera"
 Cohesion: 0.15
 Nodes (13): Camera, aspect_ratio_, config_, frame_, generate_ray, tan_half_fov_, CameraConfig, fov_radians (+5 more)
 
-### Community 9 - "RayTracer"
+### Community 9 - "Null Geodesic Ray Tracer & Event Horizon Capture | Null Geodesic Ray Tracer & Event Horizon Capture | RayTracer"
 Cohesion: 0.17
 Nodes (9): RayTracer, config_, trace_ray, RayTracerConfig, capture_margin, disk, escape_radius, integrator_config (+1 more)
 
-### Community 10 - "2. Core Modules and Contracts"
+### Community 10 - "System Architecture & GR Layer Contracts | System Architecture & GR Layer Contracts | 2. Core Modules and Contracts"
 Cohesion: 0.17
 Nodes (11): 1. Architectural Philosophy and Layering, 2.1 Math Layer (`grrt/math`), 2.2 Metrics Layer (`grrt/metrics`), 2.3 Geodesics Layer (`grrt/geodesics`), 2.4 Camera Layer (`grrt/camera`), 2.5 Ray Tracing Layer (`grrt/raytracing`), 2.6 Rendering Layer (`grrt/rendering`), 2.7 Objects Layer (`grrt/objects`) (+3 more)
 
-### Community 11 - "General Relativistic Ray Tracing Theory"
+### Community 11 - "General Relativistic Field Theory & Geodesic Equations | General Relativistic Field Theory & Geodesic Equations | General Relativistic Ray Tracing Theory"
 Cohesion: 0.22
 Nodes (8): 1. Geometric Conventions and Spacetime Interval, 2.1 Schwarzschild Spacetime, 2.2 Kerr Spacetime, 2. Spacetime Metrics, 3. Hamiltonian Geodesic Equations, 4. Observer Orthonormal Tetrad, Backward Ray Tracing Convention, General Relativistic Ray Tracing Theory
 
-### Community 12 - "5. Implementation order and weekly schedule"
+### Community 12 - "Numerical Geodesic Milestones & Acceptance Criteria | Numerical Geodesic Milestones & Acceptance Criteria | 5. Implementation order and weekly schedule"
 Cohesion: 0.33
 Nodes (6): 0/8, 5. Implementation order and weekly schedule, 6. Exact build and test workflow, 7. The scientific validation standard, 8. What you should do first, Required validation checklist
 
-### Community 13 - "Physical and Numerical Limitations"
+### Community 13 - "Coordinate Singularities & Physical Horizons | Coordinate Singularities & Physical Horizons | Physical and Numerical Limitations"
 Cohesion: 0.40
 Nodes (4): 1. Coordinate Singularities, 2. Polar Singularities, 3. Geometric Optics Approximation, Physical and Numerical Limitations
 
-### Community 14 - "Scientific Validation Protocol"
+### Community 14 - "Empirical Validation & Shadow Analysis Standards | Empirical Validation & Shadow Analysis Standards | Scientific Validation Protocol"
 Cohesion: 0.40
 Nodes (4): 1. Validation Checklist, 2. Independent Reference Solvers, 3. Quantitative Shadow Measurements, Scientific Validation Protocol
 
-### Community 15 - "test_metrics.cpp"
+### Community 15 - "Metric Symmetry & Horizon Verification Tests | Metric Symmetry & Horizon Verification Tests | test_metrics.cpp"
 Cohesion: 0.50
 Nodes (3): "Kerr metric inverse and symmetry with non-zero spin", "Kerr metric reduces to Schwarzschild at zero spin", "Schwarzschild metric inverse and symmetry"
 
-### Community 16 - "analyze_shadow.py"
+### Community 16 - "Black Hole Shadow Area & Circularity Residuals | Black Hole Shadow Area & Circularity Residuals | analyze_shadow.py"
 Cohesion: 0.83
 Nodes (3): extract_shadow_metrics(), main(), parse_ppm()
 
-### Community 17 - "validate_schwarzschild.py"
+### Community 17 - "Schwarzschild Geodesic Deflection & Capture Benchmark | Schwarzschild Geodesic Deflection & Capture Benchmark | validate_schwarzschild.py"
 Cohesion: 0.83
 Nodes (3): compute_deflection(), orbit_equations(), run_validation()
 
