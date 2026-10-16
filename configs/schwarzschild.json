@@ -1,0 +1,26 @@
+{
+  "metric": {
+    "type": "schwarzschild",
+    "mass": 1.0,
+    "spin": 0.0
+  },
+  "camera": {
+    "position": [0.0, 50.0, 1.5707963267948966, 0.0],
+    "width": 256,
+    "height": 256,
+    "fov_radians": 0.35
+  },
+  "raytracer": {
+    "escape_radius": 100.0,
+    "capture_margin": 0.02,
+    "abs_tol": 1e-8,
+    "rel_tol": 1e-8,
+    "initial_step_size": 0.02,
+    "min_step_size": 1e-6,
+    "max_step_size": 0.2,
+    "max_steps": 20000
+  },
+  "rendering": {
+    "output_file": "results/images/schwarzschild_shadow.ppm"
+  }
+}
