@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import shutil
 
 COMMUNITY_META = {
     0: {
@@ -115,6 +116,26 @@ COMMUNITY_META = {
     }
 }
 
+def clean_comments_from_html(html_text):
+    lines = []
+    in_block_comment = False
+    for line in html_text.splitlines():
+        trimmed = line.strip()
+        if in_block_comment:
+            if "*/" in trimmed:
+                in_block_comment = False
+            continue
+        if trimmed.startswith("/*"):
+            if "*/" not in trimmed:
+                in_block_comment = True
+            continue
+        if trimmed.startswith("//"):
+            continue
+        if trimmed.startswith("<!--") and trimmed.endswith("-->"):
+            continue
+        lines.append(line)
+    return "\n".join(lines)
+
 def apply_theme():
     labels_path = os.path.join("graphify-out", ".graphify_labels.json")
     labels = {str(k): v["label"] for k, v in COMMUNITY_META.items()}
@@ -122,28 +143,38 @@ def apply_theme():
         json.dump(labels, f, indent=2)
 
     graph_json_path = os.path.join("graphify-out", "graph.json")
-    with open(graph_json_path, "r", encoding="utf-8") as f:
-        graph_data = json.load(f)
+    if os.path.exists(graph_json_path):
+        with open(graph_json_path, "r", encoding="utf-8") as f:
+            graph_data = json.load(f)
 
-    for node in graph_data.get("nodes", []):
-        cid = node.get("community", 0)
-        meta = COMMUNITY_META.get(cid, {"label": "General Relativity", "color": "#8B5CF6"})
-        node["community_name"] = meta["label"]
-        node["color"] = meta["color"]
+        for node in graph_data.get("nodes", []):
+            cid = node.get("community", 0)
+            meta = COMMUNITY_META.get(cid, {"label": "General Relativity", "color": "#8B5CF6"})
+            node["community_name"] = meta["label"]
+            node["color"] = meta["color"]
 
-    with open(graph_json_path, "w", encoding="utf-8") as f:
-        json.dump(graph_data, f, indent=2)
+        with open(graph_json_path, "w", encoding="utf-8") as f:
+            json.dump(graph_data, f, indent=2)
 
     html_path = os.path.join("graphify-out", "graph.html")
     with open(html_path, "r", encoding="utf-8") as f:
         html = f.read()
 
+    script_tag_pattern = r'<script\s+src="https://unpkg\.com/vis-network@[^"]*"\s+integrity="[^"]*"\s+crossorigin="[^"]*"></script>'
+    script_tag_replacement = """<script src="vis-network.min.js"></script>
+<script>
+if (typeof vis === 'undefined') {
+  document.write('<script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"><\\/script>');
+}
+</script>"""
+    html = re.sub(script_tag_pattern, script_tag_replacement, html)
+
     nodes_match = re.search(r"const RAW_NODES = (\[.*?\]);\s*const RAW_EDGES", html)
     edges_match = re.search(r"const RAW_EDGES = (\[.*?\]);\s*const LEGEND", html)
-    legend_match = re.search(r"const LEGEND = (\[.*?\]);\s*// HTML-escape", html)
+    legend_match = re.search(r"const LEGEND = (\[.*?\]);", html)
 
     if not (nodes_match and edges_match and legend_match):
-        print("Could not locate data segments in graph.html")
+        print("Data markers missing")
         return
 
     nodes = json.loads(nodes_match.group(1))
@@ -188,7 +219,7 @@ def apply_theme():
     edges_match = re.search(r"const RAW_EDGES = (\[.*?\]);\s*const LEGEND", html)
     html = html[:edges_match.start(1)] + new_edges_json + html[edges_match.end(1):]
 
-    legend_match = re.search(r"const LEGEND = (\[.*?\]);\s*// HTML-escape", html)
+    legend_match = re.search(r"const LEGEND = (\[.*?\]);", html)
     html = html[:legend_match.start(1)] + new_legend_json + html[legend_match.end(1):]
 
     black_hole_css = """
@@ -547,113 +578,90 @@ def apply_theme():
         html = html[:sidebar_match.start()] + sidebar_replacement + "\n<script>" + html[sidebar_match.end():]
 
     black_hole_canvas_code = """
-  network.on('beforeDrawing', (ctx) => {
-    ctx.save();
+network.on('beforeDrawing', function(ctx) {
+  ctx.save();
+  const cx = 0;
+  const cy = 0;
+  const r_disk_outer = 480;
+  const r_disk_inner = 130;
+  const r_photon_sphere = 110;
+  const r_event_horizon = 85;
 
-    const cx = 0;
-    const cy = 0;
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(-0.15);
+  ctx.scale(1.0, 0.42);
 
-    const r_disk_outer = 480;
-    const r_disk_inner = 130;
-    const r_photon_sphere = 110;
-    const r_event_horizon = 85;
+  const accretionGrad = ctx.createRadialGradient(0, 0, r_disk_inner, 0, 0, r_disk_outer);
+  accretionGrad.addColorStop(0.0, 'rgba(255, 240, 180, 0.85)');
+  accretionGrad.addColorStop(0.1, 'rgba(0, 229, 255, 0.7)');
+  accretionGrad.addColorStop(0.3, 'rgba(245, 158, 11, 0.55)');
+  accretionGrad.addColorStop(0.6, 'rgba(239, 68, 68, 0.3)');
+  accretionGrad.addColorStop(1.0, 'rgba(2, 1, 8, 0.0)');
 
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(-0.15);
-    ctx.scale(1.0, 0.42);
+  ctx.fillStyle = accretionGrad;
+  ctx.beginPath();
+  ctx.arc(0, 0, r_disk_outer, 0, Math.PI * 2);
+  ctx.fill();
 
-    const accretionGrad = ctx.createRadialGradient(0, 0, r_disk_inner, 0, 0, r_disk_outer);
-    accretionGrad.addColorStop(0.0, 'rgba(255, 240, 180, 0.85)');
-    accretionGrad.addColorStop(0.1, 'rgba(0, 229, 255, 0.7)');
-    accretionGrad.addColorStop(0.3, 'rgba(245, 158, 11, 0.55)');
-    accretionGrad.addColorStop(0.6, 'rgba(239, 68, 68, 0.3)');
-    accretionGrad.addColorStop(1.0, 'rgba(2, 1, 8, 0.0)');
+  const beamGrad = ctx.createLinearGradient(-r_disk_outer, 0, r_disk_outer, 0);
+  beamGrad.addColorStop(0.0, 'rgba(0, 229, 255, 0.35)');
+  beamGrad.addColorStop(0.45, 'rgba(255, 180, 0, 0.25)');
+  beamGrad.addColorStop(0.8, 'rgba(220, 38, 38, 0.0)');
+  ctx.fillStyle = beamGrad;
+  ctx.beginPath();
+  ctx.arc(0, 0, r_disk_outer, 0, Math.PI * 2);
+  ctx.fill();
 
-    ctx.fillStyle = accretionGrad;
+  ctx.restore();
+
+  ctx.save();
+  ctx.translate(cx, cy);
+
+  ctx.strokeStyle = 'rgba(129, 140, 248, 0.08)';
+  ctx.lineWidth = 1;
+  for (let r = 80; r <= 600; r += 70) {
     ctx.beginPath();
-    ctx.arc(0, 0, r_disk_outer, 0, Math.PI * 2);
-    ctx.fill();
-
-    const beamGrad = ctx.createLinearGradient(-r_disk_outer, 0, r_disk_outer, 0);
-    beamGrad.addColorStop(0.0, 'rgba(0, 229, 255, 0.35)');
-    beamGrad.addColorStop(0.45, 'rgba(255, 180, 0, 0.25)');
-    beamGrad.addColorStop(0.8, 'rgba(220, 38, 38, 0.0)');
-    ctx.fillStyle = beamGrad;
-    ctx.beginPath();
-    ctx.arc(0, 0, r_disk_outer, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.restore();
-
-    ctx.save();
-    ctx.translate(cx, cy);
-
-    ctx.strokeStyle = 'rgba(129, 140, 248, 0.08)';
-    ctx.lineWidth = 1;
-    for (let r = 80; r <= 600; r += 70) {
-      ctx.beginPath();
-      ctx.arc(0, 0, r, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-    for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 6) {
-      ctx.beginPath();
-      ctx.moveTo(Math.cos(angle) * r_event_horizon, Math.sin(angle) * r_event_horizon);
-      ctx.lineTo(Math.cos(angle) * 600, Math.sin(angle) * 600);
-      ctx.stroke();
-    }
-
-    ctx.shadowColor = '#00E5FF';
-    ctx.shadowBlur = 35;
-    ctx.strokeStyle = 'rgba(0, 229, 255, 0.45)';
-    ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    ctx.arc(0, 0, r_photon_sphere * 1.25, 0, Math.PI * 2);
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
     ctx.stroke();
-
-    ctx.shadowColor = '#F59E0B';
-    ctx.shadowBlur = 40;
-    ctx.strokeStyle = 'rgba(255, 215, 0, 0.95)';
-    ctx.lineWidth = 4;
+  }
+  for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 6) {
     ctx.beginPath();
-    ctx.arc(0, 0, r_photon_sphere, 0, Math.PI * 2);
+    ctx.moveTo(Math.cos(angle) * r_event_horizon, Math.sin(angle) * r_event_horizon);
+    ctx.lineTo(Math.cos(angle) * 600, Math.sin(angle) * 600);
     ctx.stroke();
+  }
 
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = '#000000';
-    ctx.beginPath();
-    ctx.arc(0, 0, r_event_horizon, 0, Math.PI * 2);
-    ctx.fill();
+  ctx.shadowColor = '#00E5FF';
+  ctx.shadowBlur = 35;
+  ctx.strokeStyle = 'rgba(0, 229, 255, 0.45)';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.arc(0, 0, r_photon_sphere * 1.25, 0, Math.PI * 2);
+  ctx.stroke();
 
-    ctx.strokeStyle = 'rgba(139, 92, 246, 0.7)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
+  ctx.shadowColor = '#F59E0B';
+  ctx.shadowBlur = 40;
+  ctx.strokeStyle = 'rgba(255, 215, 0, 0.95)';
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.arc(0, 0, r_photon_sphere, 0, Math.PI * 2);
+  ctx.stroke();
 
-    ctx.restore();
-    ctx.restore();
-  });
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#000000';
+  ctx.beginPath();
+  ctx.arc(0, 0, r_event_horizon, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.strokeStyle = 'rgba(139, 92, 246, 0.7)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  ctx.restore();
+  ctx.restore();
+});
 """
-
-    physics_options_replacement = """physics: {
-      enabled: true,
-      solver: 'forceAtlas2Based',
-      forceAtlas2Based: {
-        gravitationalConstant: -100,
-        centralGravity: 0.015,
-        springLength: 130,
-        springConstant: 0.06,
-        damping: 0.45,
-        avoidOverlap: 0.85,
-      },
-      stabilization: { iterations: 220, fit: true },
-    },"""
-
-    html = re.sub(
-        r"physics:\s*\{.*?solver:\s*'forceAtlas2Based'.*?stabilization:\s*\{.*?\},",
-        physics_options_replacement,
-        html,
-        flags=re.DOTALL
-    )
 
     if "network.on('beforeDrawing'" not in html:
         network_init_match = re.search(r"const network = new vis\.Network.*?\);", html, flags=re.DOTALL)
@@ -661,12 +669,21 @@ def apply_theme():
             insert_pos = network_init_match.end()
             html = html[:insert_pos] + "\n" + black_hole_canvas_code + "\n" + html[insert_pos:]
 
+    html = clean_comments_from_html(html)
+
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(html)
 
-    doc_graph_path = os.path.join("docs", "spacetime-graph.html")
+    docs_dir = "docs"
+    os.makedirs(docs_dir, exist_ok=True)
+    doc_graph_path = os.path.join(docs_dir, "spacetime-graph.html")
     with open(doc_graph_path, "w", encoding="utf-8") as f:
         f.write(html)
+
+    src_vis = os.path.join("graphify-out", "vis-network.min.js")
+    dst_vis = os.path.join(docs_dir, "vis-network.min.js")
+    if os.path.exists(src_vis):
+        shutil.copyfile(src_vis, dst_vis)
 
     tree_path = os.path.join("graphify-out", "GRAPH_TREE.html")
     if os.path.exists(tree_path):
@@ -679,6 +696,7 @@ def apply_theme():
         tree_html = tree_html.replace("background: #6c757d;", "background: #334155;")
         tree_html = tree_html.replace("stroke: #ccc;", "stroke: rgba(129, 140, 248, 0.3);")
         tree_html = tree_html.replace("fill: #333;", "fill: #F1F5F9;")
+        tree_html = clean_comments_from_html(tree_html)
         with open(tree_path, "w", encoding="utf-8") as f:
             f.write(tree_html)
 
@@ -688,6 +706,7 @@ def apply_theme():
             cf_html = f.read()
         cf_html = cf_html.replace("--bg: #0f172a; --surface: #1e293b; --border: #334155;", "--bg: #020108; --surface: #0A071A; --border: rgba(129, 140, 248, 0.25);")
         cf_html = cf_html.replace("--accent: #38bdf8;", "--accent: #00E5FF;")
+        cf_html = clean_comments_from_html(cf_html)
         with open(callflow_path, "w", encoding="utf-8") as f:
             f.write(cf_html)
 
