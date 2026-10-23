@@ -16,3 +16,4 @@ results/measurements/*.csv
 !results/measurements/.gitkeep
 graphify-out/cache/
 .DS_Store
+docs/LEARNING_AND_AUDIT_LOG.md
