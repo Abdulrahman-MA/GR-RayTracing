@@ -80,3 +80,15 @@ The covariant momentum is obtained by lowering indices:
 $$p_\mu = g_{\mu\nu} p^\nu$$
 
 This formulation guarantees that the initial ray satisfies the null Hamiltonian condition $H = 0$.
+
+## 5. Symbolic Derivation & C++ Tensor Verification
+
+To bridge first-principles General Relativity with the C++20 numerical engine, the project includes a symbolic SymPy tensor engine (`GREngine`):
+- **Reusable Symbolic Module & Validator:** [`tools/symbolic_gr.py`](../tools/symbolic_gr.py)
+- **Interactive Derivation Notebook:** [`notebooks/01_symbolic_gr_metrics_and_derivations.ipynb`](../notebooks/01_symbolic_gr_metrics_and_derivations.ipynb)
+
+### Key Symbolic Proofs Included:
+1. **Birkhoff's Theorem & Schwarzschild Solution:** Starting from a general spherically symmetric time-dependent metric ansatz $g_{\mu\nu} = \text{diag}(-e^{2\alpha(t,r)}, e^{2\beta(t,r)}, r^2, r^2\sin^2\theta)$, solving $R_{tr} = 0$, $R^t_t - R^r_r = 0$, and $R_{\theta\theta} = 0$ proves staticity and yields $e^{2\alpha(r)} = 1 - \frac{2M}{r}$.
+2. **Curvature Invariants:** Computes the Kretschmann scalar $K = R_{abcd}R^{abcd} = \frac{48M^2}{r^6}$, proving that $r = 2M$ is a coordinate singularity while $r = 0$ is a physical curvature singularity.
+3. **Kerr Geometry & Frame-Dragging:** Symbolically verifies the Boyer-Lindquist inverse metric $g_{\mu\alpha}g^{\alpha\nu} = \delta_\mu^\nu$, outer/inner horizons $r_\pm = M \pm \sqrt{M^2 - a^2}$, static limit (ergosphere) $r_E(\theta) = M + \sqrt{M^2 - a^2\cos^2\theta}$, and ZAMO frame-dragging angular velocity $\omega = -g_{t\phi}/g_{\phi\phi}$.
+4. **Exact C++ Derivative Verification:** Symbolically differentiates both Schwarzschild and Kerr metrics ($\partial_r g_{\mu\nu}, \partial_\theta g_{\mu\nu}, \partial_\mu g^{\alpha\beta}$) and asserts 100% mathematical equivalence with the analytical expressions in `SchwarzschildMetric.cpp` and `KerrMetric.cpp`.
